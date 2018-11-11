@@ -25,6 +25,7 @@ color15 = f.readline()
 color16 = f.readline()
 
 
+wd = os.path.dirname(os.path.realpath(__file__))
 
 
 class obTheme:
@@ -33,7 +34,7 @@ class obTheme:
 
     
       def makeTheme(self):
-            f = open("themerc","w")
+            f = open(wd + "/themerc","w")
             f.write("""!! menu background
 menu.items.bg: flat
 menu.items.bg.color: """+ color1 +"""
@@ -60,7 +61,7 @@ menu.title.text.justify: center
 
 !! selected menu item
 menu.items.active.bg: flat
-menu.items.active.bg.color: #c5e1e3
+menu.items.active.bg.color: """ + color5 + """
 menu.items.active.text.color: """ + color1 + """
 
 !! titlebar
@@ -69,18 +70,19 @@ window.active.title.bg.color: """ + color3 + """
 window.inactive.title.bg: flat
 window.inactive.title.bg.color: """+ color1 +"""
 
+
 !! titlebar text
-window.label.text.justify: center
+window.label.text.justify: left
 window.active.label.bg: parentrelative
-window.active.label.text.color: """ + color2 + """
+window.active.label.text.color: """ + color1 + """
 window.inactive.label.bg: parentrelative
-window.inactive.label.text.color: """ + color15 + """
+window.inactive.label.text.color: """ + color3 + """
 
 !! borders
 window.active.border.color: """+ color1 +"""
 window.inactive.border.color: """+ color1 +"""
 padding.width: 8
-padding.height: 8
+padding.height: 12
 window.client.padding.width: 0
 window.client.padding.height: 0
 border.width: 0
@@ -119,11 +121,11 @@ window.*.button.*.pressed.bg: flat
 
 window.active.button.*.hover.bg: flat
 window.active.button.*.hover.bg: parentrelative
-window.active.button.*.hover.bg.color: """ + color3 + """
+window.active.button.*.hover.bg.color: """ + color16 + """
 window.active.button.hover.image.color: #c5e1e3
 window.active.button.*.pressed.bg.color: """ + color15 + """
 window.active.button.toggled.image.color: #c5e1e3
-window.active.button.disabled.image.color: """ + color16 + """
+window.active.button.disabled.image.color: """ + color3 + """
 
 window.inactive.button.*.hover.bg: flat
 window.inactive.button.*.hover.bg: parentrelative
@@ -131,20 +133,20 @@ window.inactive.button.hover.image.color: #c5e1e3
 window.inactive.button.toggled.image.color: #c5e1e3
 window.inactive.button.disabled.image.color: """ + color16 + """
 
-window.active.button.close.unpressed.image.color: """ + color15 + """
-window.active.button.close.pressed.image.color: """ + color15 + """
-window.inactive.button.close.unpressed.image.color: """ + color15 + """
-window.inactive.button.close.pressed.image.color: """ + color15 + """
+window.active.button.close.unpressed.image.color: """ + color14 + """
+window.active.button.close.pressed.image.color: """ + color14 + """
+window.inactive.button.close.unpressed.image.color: """ + color14 + """
+window.inactive.button.close.pressed.image.color: """ + color14 + """
 
-window.active.button.max.unpressed.image.color: """ + color14 + """
-window.active.button.max.pressed.image.color: """ + color14 + """
-window.inactive.button.max.unpressed.image.color: """ + color14 + """
-window.inactive.button.max.pressed.image.color: """ + color14 + """
+window.active.button.max.unpressed.image.color: """ + color13 + """
+window.active.button.max.pressed.image.color: """ + color13 + """
+window.inactive.button.max.unpressed.image.color: """ + color13 + """
+window.inactive.button.max.pressed.image.color: """ + color13 + """
 
-window.active.button.iconify.unpressed.image.color: """ + color13 + """
-window.active.button.iconify.pressed.image.color: """ + color13 + """
-window.inactive.button.iconify.unpressed.image.color: """ + color13 + """
-window.inactive.button.iconify.pressed.image.color: """ + color13 + """
+window.active.button.iconify.unpressed.image.color: """ + color15 + """
+window.active.button.iconify.pressed.image.color: """ + color15 + """
+window.inactive.button.iconify.unpressed.image.color: """ + color15 + """
+window.inactive.button.iconify.pressed.image.color: """ + color15 + """
 
 window.active.button.shade.unpressed.image.color: #cecce2
 window.active.button.shade.pressed.image.color: #cecce2
@@ -156,7 +158,7 @@ window.active.button.desk.pressed.image.color: #87e0dc
 window.inactive.button.desk.unpressed.image.color: #87e0dc
 window.inactive.button.desk.pressed.image.color: #87e0dc
 """)
-            #subprocess.call(["mv", "themerc", "Muon/openbox-3/"])
+            #subprocess.call(["mv", muonDir + "/themerc", muonDir + "/Muon/openbox-3/"])
             #subprocess.call(["cp", "-R", "Muon", home + "/.themes"])
                   
 
@@ -164,8 +166,11 @@ window.inactive.button.desk.pressed.image.color: #87e0dc
 obTheme = obTheme("bright")
 
 obTheme.makeTheme()
-subprocess.call(["mv", "themerc", "Muon/openbox-3/"])
-subprocess.call(["cp", "-R", "Muon", home + "/.themes"])
+
+
+subprocess.Popen(["mv","-f",wd + "/themerc", "Lepton/openbox-3/"], cwd=wd)
+subprocess.Popen(["cp", "-R", "Lepton", home + "/.themes"], cwd=wd)
+subprocess.Popen(["cp", home + "/.cache/wal/colors-rofi-dark.rasi", "/usr/share/rofi/themes"])
 subprocess.call(["openbox", "--reconfigure"])
 
 
