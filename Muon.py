@@ -1,9 +1,27 @@
+#!/usr/bin/env python3
+# Making it executable
+
+
 # Imports
 import os
 import subprocess
+import argparse
+
+
 
 
 # Declaring variables
+parser = argparse.ArgumentParser()
+parser.add_argument("image")
+parser.add_argument("--light",action="store_true") 
+parser.add_argument("-l",action="store_true") 
+args = parser.parse_args()
+
+if args.light or args.l:
+      subprocess.call(["wal", "-i", args.image, "-l"])
+else:
+      subprocess.call(["wal", "-i", args.image])
+
 home = os.getenv("HOME")
 
 f = open(home + "/.cache/wal/colors")
