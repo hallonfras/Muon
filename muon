@@ -13,14 +13,21 @@ import argparse
 # Declaring variables
 parser = argparse.ArgumentParser()
 parser.add_argument("image")
+parser.add_argument("-b")
 parser.add_argument("--light",action="store_true") 
 parser.add_argument("-l",action="store_true") 
 args = parser.parse_args()
 
-if args.light or args.l:
-      subprocess.call(["wal", "-i", args.image, "-l"])
+if  args.b:
+      if args.l or args.light:
+            subprocess.call(["wal" ,"--backend",args.b, "-i", args.image, "-l"])
+      else:
+            subprocess.call(["wal" ,"--backend",args.b, "-i", args.image])
+elif args.light or args.l:
+     subprocess.call(["wal","-i", args.image, "-l"])
 else:
       subprocess.call(["wal", "-i", args.image])
+
 
 home = os.getenv("HOME")
 
@@ -47,8 +54,8 @@ wd = os.path.dirname(os.path.realpath(__file__))
 
 
 class obTheme:
-      def __init__(self, brightness):
-            self.brightness = brightness
+      def __init__(self):
+            pass
 
     
       def makeTheme(self):
@@ -97,13 +104,13 @@ window.inactive.label.bg: parentrelative
 window.inactive.label.text.color: """ + color3 + """
 
 !! borders
-window.active.border.color: """+ color1 +"""
+window.active.border.color: """+ color3 +"""
 window.inactive.border.color: """+ color1 +"""
 padding.width: 8
 padding.height: 12
 window.client.padding.width: 0
 window.client.padding.height: 0
-border.width: 0
+border.width: 4
 window.handle.width: 0
 
 window.active.client.color:  """+ color1 +"""
@@ -176,19 +183,196 @@ window.active.button.desk.pressed.image.color: #87e0dc
 window.inactive.button.desk.unpressed.image.color: #87e0dc
 window.inactive.button.desk.pressed.image.color: #87e0dc
 """)
-            #subprocess.call(["mv", muonDir + "/themerc", muonDir + "/Muon/openbox-3/"])
-            #subprocess.call(["cp", "-R", "Muon", home + "/.themes"])
+
+class rofiTheme:
+      def __init__(self):
+            pass
+      
+
+      def makeTheme(self):
+            f = open(wd + "/Lepton.rasi","w")
+            f.write("""* {
+    active-background: """ + color3 + """;
+    active-foreground: @foreground;
+    normal-background: @background;
+    normal-foreground: @foreground;
+    urgent-background: """ + color2 + """;
+    urgent-foreground: @foreground;
+
+    alternate-active-background: @background;
+    alternate-active-foreground: @foreground;
+    alternate-normal-background: @background;
+    alternate-normal-foreground: @foreground;
+    alternate-urgent-background: @background;
+    alternate-urgent-foreground: @foreground;
+
+    selected-active-background: """ + color2 + """;
+    selected-active-foreground: @foreground;
+    selected-normal-background: """ + color11 + """;
+    selected-normal-foreground: @foreground;
+    selected-urgent-background: """ + color4 + """;
+    selected-urgent-foreground: @foreground;
+
+    background-color: @background;
+    background: """ + color1 + """;
+    foreground: """ + color16 + """;
+    border-color: @background;
+    spacing: 2;
+}
+
+#window {
+    background-color: @background;
+    border: 0;
+    padding: 2.5ch;
+    location:     northwest;
+    y-offset: 3%;
+    x-offset: 2%;
+    width: 25%;
+    height: 20%;
+}
+
+#mainbox {
+    border: 0;
+    padding: 0;
+}
+
+#message {
+    border: 2px 0px 0px;
+    border-color: @border-color;
+    padding: 1px;
+}
+
+#textbox {
+    text-color: @foreground;
+}
+
+inputbar {
+    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: ":";
+    margin: 0px 0.3em 0em 0em;
+    text-color: @normal-foreground;
+}
+
+#listview {
+    fixed-height: 0;
+    border: 2px 0px 0px;
+    border-color: @border-color;
+    spacing: 2px;
+    scrollbar: true;
+    padding: 2px 0px 0px;
+}
+
+#element {
+    border: 0;
+    padding: 1px;
+}
+
+#element.normal.normal {
+    background-color: @normal-background;
+    text-color: @normal-foreground;
+}
+
+#element.normal.urgent {
+    background-color: @urgent-background;
+    text-color: @urgent-foreground;
+}
+
+#element.normal.active {
+    background-color: @active-background;
+    text-color: @active-foreground;
+}
+
+#element.selected.normal {
+    background-color: @selected-normal-background;
+    text-color: @selected-normal-foreground;
+}
+
+#element.selected.urgent {
+    background-color: @selected-urgent-background;
+    text-color: @selected-urgent-foreground;
+}
+
+#element.selected.active {
+    background-color: @selected-active-background;
+    text-color: @selected-active-foreground;
+}
+
+#element.alternate.normal {
+    background-color: @alternate-normal-background;
+    text-color: @alternate-normal-foreground;
+}
+
+#element.alternate.urgent {
+    background-color: @alternate-urgent-background;
+    text-color: @alternate-urgent-foreground;
+}
+
+#element.alternate.active {
+    background-color: @alternate-active-background;
+    text-color: @alternate-active-foreground;
+}
+
+#scrollbar {
+    width: 4px;
+    border: 0;
+    handle-width: 8px;
+    padding: 0;
+}
+
+#sidebar {
+    border: 2px 0px 0px;
+    border-color: @border-color;
+}
+
+#button {
+    text-color: @normal-foreground;
+}
+
+#button.selected {
+    background-color: @selected-normal-background;
+    text-color: @selected-normal-foreground;
+}
+
+#inputbar {
+    spacing: 0;
+    text-color: @normal-foreground;
+    padding: 1px;
+}
+
+#case-indicator {
+    spacing: 0;
+    text-color: @normal-foreground;
+}
+
+#entry {
+    spacing: 0;
+    text-color: @normal-foreground;
+}
+
+#prompt {
+    spacing: 0;
+    text-color: @normal-foreground;
+}
+""")
+            
                   
 
 
-obTheme = obTheme("bright")
+obTheme = obTheme()
+rofiTheme = rofiTheme()
 
+rofiTheme.makeTheme()
 obTheme.makeTheme()
 
 
 subprocess.Popen(["mv","-f",wd + "/themerc", "Lepton/openbox-3/"], cwd=wd)
 subprocess.Popen(["cp", "-R", "Lepton", home + "/.themes"], cwd=wd)
-subprocess.Popen(["cp", home + "/.cache/wal/colors-rofi-dark.rasi", "/usr/share/rofi/themes"])
+subprocess.Popen(["cp", wd + "/Lepton.rasi", "/usr/share/rofi/themes"], cwd=wd)
+#subprocess.Popen(["cp", home + "/.cache/wal/colors-rofi-dark.rasi", "/usr/share/rofi/themes"])
 subprocess.call(["openbox", "--reconfigure"])
 
 
