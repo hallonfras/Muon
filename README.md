@@ -8,8 +8,8 @@ Currently it can only generate openbox themes
 # Installation
 ```
 cd <SOMEWHERE>
-git clone https://github.com/hallonfras/Muon
-cd Muon
+git clone https://github.com/hallonfras/muon
+cd muon
 echo "PATH="${PATH}:$( pwd )"" >> ${HOME}/.bashrc
 ```
 # Usage
