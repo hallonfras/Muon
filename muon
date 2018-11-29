@@ -97,7 +97,7 @@ window.inactive.title.bg.color: """+ color1 +"""
 
 
 !! titlebar text
-window.label.text.justify: left
+window.label.text.justify: center
 window.active.label.bg: parentrelative
 window.active.label.text.color: """ + color1 + """
 window.inactive.label.bg: parentrelative
@@ -107,10 +107,10 @@ window.inactive.label.text.color: """ + color3 + """
 window.active.border.color: """+ color3 +"""
 window.inactive.border.color: """+ color1 +"""
 padding.width: 8
-padding.height: 12
+padding.height: 16
 window.client.padding.width: 0
 window.client.padding.height: 0
-border.width: 4
+border.width: 0
 window.handle.width: 0
 
 window.active.client.color:  """+ color1 +"""
@@ -224,16 +224,15 @@ class rofiTheme:
     background-color: @background;
     border: 0;
     padding: 2.5ch;
-    location:     northwest;
-    y-offset: 3%;
-    x-offset: 2%;
+    location:     center;
     width: 25%;
-    height: 20%;
+    height: 27%;
+    border-radius: 1ch;
 }
 
 #mainbox {
     border: 0;
-    padding: 0;
+    padding: 2.5ch;
 }
 
 #message {
@@ -248,6 +247,7 @@ class rofiTheme:
 
 inputbar {
     children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
+    margin: 1ch;
 }
 
 textbox-prompt-colon {
@@ -261,7 +261,7 @@ textbox-prompt-colon {
     fixed-height: 0;
     border: 2px 0px 0px;
     border-color: @border-color;
-    spacing: 2px;
+    spacing: 14px;
     scrollbar: true;
     padding: 2px 0px 0px;
 }
@@ -287,8 +287,8 @@ textbox-prompt-colon {
 }
 
 #element.selected.normal {
-    background-color: @selected-normal-background;
-    text-color: @selected-normal-foreground;
+    background-color: @normal-background;
+    text-color: @selected-normal-background;
 }
 
 #element.selected.urgent {
@@ -359,7 +359,12 @@ textbox-prompt-colon {
 }
 """)
             
-                  
+class gtk:
+    def __init__(self):
+        pass
+
+    def makeTheme(self):
+        f.open                  
 
 
 obTheme = obTheme()
@@ -372,7 +377,6 @@ obTheme.makeTheme()
 subprocess.Popen(["mv","-f",wd + "/themerc", "Lepton/openbox-3/"], cwd=wd)
 subprocess.Popen(["cp", "-R", "Lepton", home + "/.themes"], cwd=wd)
 subprocess.Popen(["cp", wd + "/Lepton.rasi", "/usr/share/rofi/themes"], cwd=wd)
-#subprocess.Popen(["cp", home + "/.cache/wal/colors-rofi-dark.rasi", "/usr/share/rofi/themes"])
 subprocess.call(["openbox", "--reconfigure"])
 
 
